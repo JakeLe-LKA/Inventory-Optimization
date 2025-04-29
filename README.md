@@ -87,8 +87,8 @@ Where:
 ### Consequences of Decisions
 - Profit: Optimized (s, S) improves profitability
 - Risk:
---Too low s/S → stockouts, lost sales
---Too high S → high holding costs, risk of spoilage
+Too low s/S → stockouts, lost sales  
+Too high S → high holding costs, risk of spoilage
 
 ---
 
@@ -147,3 +147,30 @@ In the context of an inventory management system (s, S), many input parameters c
 | Initial inventory (init_S) | Higher init_S → Decrease in early replenishment needs (delays first order), temporarily reducing s. |
 
 By changing each parameter while keeping other factors constant (*ceteris paribus*), we determine the amount of change required to change the optimal solution. Charts and data tables will illustrate the impact of each parameter on total profit and inventory configuration, supporting flexible decision-making in volatile market conditions [Chong and Zak, 2013].
+
+---
+
+### Key sensitive parameters
+
+#### Fixed ordering cost (K)
+
+We investigate the effect of the fixed ordering cost parameter (K) on the optimal inventory strategy (s, S) and the expected profit.
+
+- Base K level: **150**
+- K values considered: **50 to 250** (increment of 25 units)
+
+Each K level is simulated to find the corresponding optimal pair (s, S) and calculate the average profit (profit_mean).
+
+**Table 4**: Optimal (s, S) and Expected Profit by different value of Fixed Ordering Cost (K)
+
+| K | s | S | Expected profit |
+| :--- | :--- | :--- | :--- |
+| 50 | 175 | 565 | 173 616 |
+| 75 | 175 | 565 | 170 522 |
+| 100 | 170 | 565 | 167 490 |
+| 125 | 160 | 570 | 164 491 |
+| 150 | 140 | 570 | 161 468 |
+| 175 | 170 | 570 | 158 498 |
+| 200 | 155 | 570 | 155 489 |
+| 225 | 160 | 570 | 152 560 |
+| 250 | 155 | 570 | 149 515 |
