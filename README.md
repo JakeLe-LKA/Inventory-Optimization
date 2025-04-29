@@ -87,8 +87,8 @@ Where:
 ### Consequences of Decisions
 - Profit: Optimized (s, S) improves profitability
 - Risk:
-- -Too low s/S → stockouts, lost sales
-- -Too high S → high holding costs, risk of spoilage
+--Too low s/S → stockouts, lost sales
+--Too high S → high holding costs, risk of spoilage
 
 ---
 
@@ -102,30 +102,48 @@ The process of looking for the above optimal solution can be shown using the tab
 
 | Best (s, S) | Mean profit (€) | Profit std | Stock out bottles | Stock out std | Fill rate (%) |
 |-------------|------------------|------------|--------------------|----------------|----------------|
-| (165, 575)  | 161,016.7        | 2,931.1    | 15,348.8           | 222.3          | 91.96%         |
+| (150, 550)  | 160 310          | 2 068      | 1 580              | 421            | 97.6%          |
 
-**Figure 1: Simulation results of (s, S) for 1st simulation**
-![Simulation Heatmap](Graphs and Pictures/491003846_1631281967552845_2130734520271673625_n.png)
+**Figure 1: Expected profit by different s, S point in the 1st simulation**
 
-To further validate the robustness of the solution, we repeated the simulation multiple times. The performance of the best parameters remained consistent across simulations, which strengthens the confidence in the recommended inventory policy.
+![Simulation Heatmap](Graphs%20and%20Pictures/491003846_1631281967552845_2130734520271673625_n.png)
 
-We also analyzed the **service level**, measured as the fill rate, which was **approximately 92%**, indicating a high level of customer satisfaction.
+Table 1 and Figure 1 shows the maximum expected return of the model in 100 simulations with each different point s, S located in the yellow cells near (150, 550). From there, we narrowed the search space, using smaller steps, and increased the number of simulations to 1000 to find a more stable optimal solution.
 
-**Table 2: Summary of simulations (s=165, S=575)**
+**Table 2: Optimal s, S for the highest expected profit in the 2nd simulation**
 
-| Run | Profit (€) | Stockouts | Fill Rate (%) |
-|-----|------------|-----------|----------------|
-| 1   | 161,017    | 15,349    | 91.96%         |
-| 2   | 160,825    | 15,411    | 91.84%         |
-| 3   | 161,090    | 15,300    | 92.00%         |
-| ... | ...        | ...       | ...            |
+| Best (s, S) | Mean profit (€) | Profit std | Stock out bottles | Stock out std | Fill rate (%) |
+|-------------|------------------|------------|--------------------|----------------|----------------|
+| (165, 575)  | 161 531        | 1726    | 970           | 356         | 98.5%         |
 
-The results demonstrate that using a stochastic (s, S) inventory policy enables the company to handle uncertain daily demand effectively while keeping holding costs and lost sales penalties in check.
+**Figure 2: Expected profit by different s, S point in the 2nd simulation**
 
-## Conclusion
+![Simulation Heatmap](Graphs%20and%20Pictures/491025963_1853225465458904_5621856421242682805_n.png)
 
-We developed a stochastic inventory model for a beverage distributor, with the goal of maximizing profit under uncertain daily demand. The demand was modeled using a Poisson distribution, and the inventory policy was formulated as an (s, S) policy.
+Figure 2 indicates almost the same solution, which has the densest yellow cluster sitting around (165, 575).
 
-Simulation-based optimization helped us identify the optimal values of **s = 165** and **S = 575**, achieving a high expected annual profit and a service level above **91%**.
+From a business perspective, the result appears achievable and realistic. The storage requirements stay within the company's warehouse capacity, and the replenishment quantity (around 410 units) is manageable for the warehouse operations. Furthermore, the result aligns with typical expectations for businesses selling fast-moving consumer goods like beer: having a sufficient safety stock is crucial to avoid lost sales, while excessive stock should be avoided due to spoilage risks. The optimization results also appear consistent with intuition. Since beer is a perishable and highly demanded product, it makes sense that the company should avoid stockouts but also not store too much. The recommended inventory levels strike a good compromise. There are no surprising outcomes — the model's suggestion matches what managers would reasonably expect when balancing risk and profit.
 
-This model provides a data-driven decision support tool that balances inventory investment with customer satisfaction, ensuring that the company operates efficiently and profitably.
+---
+
+## Sensitivity Analyses
+
+This part will answer an important question:  
+*"Is the current optimal result sustainable when the business environment changes?"*
+
+In the context of an inventory management system (s, S), many input parameters can fluctuate differently due to unstable economic conditions, from interest rates to operating costs. The following analysis will focus on the main parameters that affect the optimal solution (s, S) and assess the sensitivity of the model to each factor.
+
+**Table 3**: Simulation model’s parameters affecting the Expected Profit
+
+| Parameter | Impact on Inventory Strategy (s, S) |
+| :--- | :--- |
+| Unit profit (c) | Increase in c → Business holds more inventory to reduce risk of lost sales. |
+| Holding cost (h) | Increase in h → Decrease in S to reduce inventory levels, favoring faster turnover. |
+| Fixed ordering cost (K) | Increase in K → Increase in s to reduce order frequency, consolidating orders to save costs. |
+| Probability of delivery success (p) | Increase in p → Decrease in s, allowing more frequent orders due to lower stockout risk. |
+| Average demand (average_demand) | Increase in average demand → Increase in S to meet higher customer demand. |
+| Stock-out penalty (l) | Increase in l → Increase in S to reduce stockout risk and avoid high penalties. |
+| Variable order cost (k) | Increase in k → Similar effect to K (increase in s), but to a smaller extent. |
+| Initial inventory (init_S) | Higher init_S → Decrease in early replenishment needs (delays first order), temporarily reducing s. |
+
+By changing each parameter while keeping other factors constant (*ceteris paribus*), we determine the amount of change required to change the optimal solution. Charts and data tables will illustrate the impact of each parameter on total profit and inventory configuration, supporting flexible decision-making in volatile market conditions [Chong and Zak, 2013].
