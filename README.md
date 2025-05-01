@@ -87,8 +87,8 @@ Where:
 ### Consequences of Decisions
 - Profit: Optimized (s, S) improves profitability
 - Risk:  
-Too low s/S → stockouts, lost sales  
-Too high S → high holding costs, risk of spoilage
+  - Too low s/S → stockouts, lost sales
+  - Too high S → high holding costs, risk of spoilage
 
 ---
 
